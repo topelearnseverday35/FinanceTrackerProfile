@@ -17,13 +17,13 @@ public class ControllerClass {
     public Object userProfile(@RequestBody FinanceTrackerRequest financeTrackerRequest) {
     return serviceClass.createProfile(financeTrackerRequest);
     }
-
-    @GetMapping("/retrieve-by")
-    public Object retrievalProfile(@RequestParam String userName,
-                                   @RequestParam String email,
-                                   @RequestParam String phoneNumber) {
-        return serviceClass.retrieveProfile( userName, email,phoneNumber);
-    }
+//
+//    @GetMapping("/retrieve-by")
+//    public Object retrievalProfile(@RequestParam String userName,
+//                                   @RequestParam String email,
+//                                   @RequestParam String phoneNumber) {
+//        return serviceClass.retrieveProfile( phoneNumber);
+//    }
     @GetMapping("/retrieve-by-email")
     public Object retrieveSpecifically(@RequestParam  String email){
         return serviceClass.retrieveProfileByEmail(email);

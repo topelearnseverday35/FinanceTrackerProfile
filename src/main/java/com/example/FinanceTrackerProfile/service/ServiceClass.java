@@ -43,7 +43,7 @@ public class ServiceClass {
         }
         EntityClass byEmail;
         try {
-            byEmail = repositoryClass.findByEmail(financeTrackerRequest.getEmail());
+            byEmail = repositoryClass.findEmail(financeTrackerRequest.getEmail());
             log.info("By Email entity{}", byEmail);
         } catch (Exception e) {
             log.info("Error trying to get by Email. ERR: {}", e.getMessage());
@@ -68,7 +68,7 @@ public class ServiceClass {
 // For Duplicate phoneNumber
         EntityClass byPhoneNum;
         try {
-            byPhoneNum = repositoryClass.findByPhoneNumber(financeTrackerRequest.getPhoneNumber());
+            byPhoneNum = repositoryClass.findPhoneNumber(financeTrackerRequest.getPhoneNumber());
         } catch (Exception e) {
             log.info("Error trying to get by phone number. ERR: " + e.getMessage());
             return ("Server Error! ,Try again later");
@@ -81,7 +81,7 @@ public class ServiceClass {
 //For Duplicate UserName
         EntityClass username;
         try {
-            username = repositoryClass.findByUserName(financeTrackerRequest.getUsername());
+            username = repositoryClass.findUserName(financeTrackerRequest.getUsername());
         } catch (Exception e) {
             log.info("Error trying to get by username. ERR: " + e.getMessage());
             return ("Server Error! ,Try again later");
@@ -95,6 +95,7 @@ public class ServiceClass {
 
 
 // Profile Creation
+
         EntityClass entityClass = new EntityClass();
         entityClass.setFirstname(financeTrackerRequest.getFirstname());
         entityClass.setLastname(financeTrackerRequest.getLastname());
@@ -113,15 +114,15 @@ public class ServiceClass {
 
     }
 
-    public Object retrieveProfile(String email, String userName, String phoneNumber) {
+    public Object retrieveProfile( String phoneNumber) {
         List<EntityClass> entityProfile;
         //For if phoneNumber field is empty in database
         if (phoneNumber != null) {
             EntityClass retrieveByphoneNumber = null;
             try {
-                retrieveByphoneNumber = repositoryClass.findByPhoneNumber(phoneNumber);
+                retrieveByphoneNumber = repositoryClass.findPhoneNumber(phoneNumber);
             } catch (Exception e) {
-                log.info("Error retrieving Profile. ERR: " + e.getMessage());
+                log.info("Can Not Retrieve Profile. ERR: " + e.getMessage());
                 return "Error retrieving Profile.";
 //                return Objects.requireNonNullElse(retrieveByphoneNumber, "User with phoneNumber does not exist");
 
@@ -143,12 +144,12 @@ public class ServiceClass {
     public Object retrieveProfileByEmail(String email) {
         Object response;
         try {
-            response = repositoryClass.findByEmail(email);
+            response = repositoryClass.findEmail(email);
             if (response == null) {
                 response = "Profile with this email does not exist";
             }
         } catch (Exception e) {
-            log.info("Error retrieving Profile. ERR: " + e.getMessage());
+            log.info("Can not retrieve Profile. ERR: " + e.getMessage());
             response = "Error retrieving Profile.";
         }
         return response;
@@ -158,12 +159,12 @@ public class ServiceClass {
     public Object retrieveProfileByphoneNumber(String phoneNumber) {
         Object response;
         try {
-            response = repositoryClass.findByPhoneNumber(phoneNumber);
+            response = repositoryClass.findPhoneNumber(phoneNumber);
             if (response == null) {
                 response = "Profile with this phoneNumber does not exist";
             }
         } catch (Exception e) {
-            log.info("Error retrieving Profile. ERR: " + e.getMessage());
+            log.info("Error retrieving Profile. ERR: {}", e.getMessage());
             response = "Error retrieving Profile.";
         }
         return response;
@@ -174,7 +175,7 @@ public class ServiceClass {
     public Object retrieveProfileByuserName(String userName) {
         Object response;
         try {
-            response = repositoryClass.findByUserName(userName);
+            response = repositoryClass.findUserName(userName);
             if (response == null) {
                 response = "Profile with this UserName does not exist";
             }
@@ -184,7 +185,7 @@ public class ServiceClass {
         }
         return response;
     }
-
+// Update Method
     public Object updateProfile(UpdateRequest updateRequest, Long id) {
         Optional<EntityClass> userProfile2 = repositoryClass.findById(id);
         if (updateRequest == null){
@@ -213,7 +214,7 @@ public class ServiceClass {
         }
 
         if (phoneNumberisValid) {
-           EntityClass userExist = repositoryClass.findByPhoneNumber(updateRequest.getPhoneNumber());
+           EntityClass userExist = repositoryClass.findPhoneNumber(updateRequest.getPhoneNumber());
             if(userExist != null) {
                 return "User with this Phone Number already exists";
             }
@@ -225,6 +226,7 @@ public class ServiceClass {
 
     }
 
+ //Delete Method
     public Object deleteProfile(Long id) {
         Optional<EntityClass> userProfile2 = repositoryClass.findById(id);
         if (userProfile2.isEmpty()) {

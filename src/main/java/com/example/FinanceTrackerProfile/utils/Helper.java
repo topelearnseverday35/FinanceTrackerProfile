@@ -68,7 +68,7 @@ return false;
         if( username!=null && username.length() >7 && username.length() < 20) {
             EntityClass entityClass;
             try {
-                entityClass = repositoryClass.findByUserName(username);
+                entityClass = repositoryClass.findUserName(username);
             }catch (Exception e) {
                 return false;
             }
