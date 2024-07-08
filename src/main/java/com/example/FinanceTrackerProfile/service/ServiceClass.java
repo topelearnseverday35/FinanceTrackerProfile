@@ -156,7 +156,7 @@ public class ServiceClass {
 
     }
 
-    public Object retrieveProfileByphoneNumber(String phoneNumber) {
+    public Object retrieveProfileByphoneNumber(String phoneNumber) throws Exception {
         Object response;
         try {
             response = repositoryClass.findPhoneNumber(phoneNumber);
@@ -166,6 +166,7 @@ public class ServiceClass {
         } catch (Exception e) {
             log.info("Error retrieving Profile. ERR: {}", e.getMessage());
             response = "Error retrieving Profile.";
+            throw new Exception(String.valueOf(response));
         }
         return response;
 

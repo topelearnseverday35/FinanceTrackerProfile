@@ -30,7 +30,7 @@ public class ControllerClass {
 
     }
     @GetMapping("/retrieve-by-phoneNumber")
-    public Object retrieveSpecifically2(@RequestParam  String phoneNumber){
+    public Object retrieveSpecifically2(@RequestParam  String phoneNumber) throws Exception{
         return serviceClass.retrieveProfileByphoneNumber(phoneNumber);
 
     }
